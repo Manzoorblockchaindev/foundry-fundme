@@ -1,66 +1,60 @@
-## Foundry
+# Foundry FundMe Project
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A fully tested and configurable **FundMe** smart contract built using the **Foundry framework**, utilizing **Chainlink price feeds**, and integrated with **mock deployments** for local testing environments.
 
-Foundry consists of:
+**Created by: [Manzoor](https://github.com/Manzoorblockchaindev)** — a dedicated **class 9 student** who is actively learning **blockchain development** and building real Web3 projects to gain hands-on experience 
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
-## Documentation
+---
 
-https://book.getfoundry.sh/
+## Project Overview
 
-## Usage
+This smart contract allows users to fund the contract with **ETH**. It uses **Chainlink price feeds** to ensure users contribute **at least $5 USD** worth of ETH. Only the contract **owner** can withdraw the funds.
 
-### Build
+### Key Highlights:
+- Chainlink price feed integration (Mainnet, Sepolia, or mocked locally)
+- Gas-optimized withdrawal via `cheapWithdraw`
+- Full test coverage with Foundry’s testing tools
+- Scripts for deployment, funding, and withdrawal
 
-```shell
-$ forge build
-```
+---
 
-### Test
+## Features
 
-```shell
-$ forge test
-```
+- ✅ Minimum $5 funding in USD (via Chainlink)
+- ✅ Owner-only withdrawal with error handling
+- ✅ Gas-optimized `cheapWithdraw()` function
+- ✅ `fallback()` and `receive()` to handle ETH
+- ✅ Automated deploy/fund/withdraw scripts
+- ✅ Unit + Integration tests with mocks
 
-### Format
+---
 
-```shell
-$ forge fmt
-```
+## Quick Start
 
-### Gas Snapshots
+### Prerequisites
 
-```shell
-$ forge snapshot
-```
+- [Foundry](https://book.getfoundry.sh/)
+- Git & Node.js
+- (Optional) RPC provider like Sepolia
 
-### Anvil
+### Install
 
-```shell
-$ anvil
-```
+```bash
+git clone https://github.com/Manzoorblockchaindev/foundry-fundme.git
+cd foundry-fundme
+forge install
 
-### Deploy
+### Run Tests
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+```bash
+forge test
 
-### Cast
+### Deploy Locally
 
-```shell
-$ cast <subcommand>
-```
+anvil
+forge script script/DeployFundMe.s.sol --fork-url http://127.0.0.1:8545 --broadcast --ffi
 
-### Help
+### Deploy to Sepolia
+forge script script/DeployFundMe.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
