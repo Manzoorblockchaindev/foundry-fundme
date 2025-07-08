@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-// Note: The AggregatorV3Interface might be at a different location than what was in the video!
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import {PriceConverter} from "./PriceConverter.sol";
 
@@ -13,7 +12,6 @@ contract FundMe {
     mapping(address => uint256) private s_addressToAmountFunded;
     address[] private s_funders;
 
-    // Could we make this constant?  /* hint: no! We should make it immutable! */
     address private /* immutable */ i_owner;
     uint256 public constant MINIMUM_USD = 5e18;
     AggregatorV3Interface private s_priceFeed;
@@ -48,7 +46,7 @@ function cheapWithdraw() public onlyOwner {
      s_funders = new address[](0);
     (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
     require(callSuccess, "Call failed");
-} // ✅ DO NOT close the contract here (don't put a `}` after this)
+} 
 
     
     function withdraw() public onlyOwner {
@@ -68,19 +66,7 @@ function cheapWithdraw() public onlyOwner {
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Call failed");
     }
-    // Explainer from: https://solidity-by-example.org/fallback/
-    // Ether is sent to contract
-    //      is msg.data empty?
-    //          /   \
-    //         yes  no
-    //         /     \
-    //    receive()?  fallback()
-    //     /   \
-    //   yes   no
-    //  /        \
-    //receive()  fallback()
 
-    
 
     function getAddressToAmountFunded(address fundingAddress) external view returns(uint256){
         return s_addressToAmountFunded[fundingAddress];
@@ -102,13 +88,3 @@ function cheapWithdraw() public onlyOwner {
         fund();
     }
 }
-
-
-// Concepts we didn't cover yet (will cover in later sections)
-// 1. Enum
-// 2. Events
-// 3. Try / Catch
-// 4. Function Selector
-// 5. abi.encode / decode
-// 6. Hash with keccak256
-// 7. Yul / Assembly
